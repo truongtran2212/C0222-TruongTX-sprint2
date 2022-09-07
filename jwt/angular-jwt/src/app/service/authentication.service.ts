@@ -25,7 +25,7 @@ export class AuthenticationService {
       map(
         userData => {
           sessionStorage.setItem('username', username);
-          let tokenStr = 'Bearer ' + userData.token;
+          const tokenStr = 'Bearer ' + userData.token;
           sessionStorage.setItem('token', tokenStr);
           return userData;
         }
@@ -33,14 +33,13 @@ export class AuthenticationService {
     );
   }
 
-
   isUserLoggedIn() {
-    const user = sessionStorage.getItem('username')
-    console.log(!(user === null))
-    return !(user === null)
+    const user = sessionStorage.getItem('username');
+    console.log(!(user === null));
+    return !(user === null);
   }
 
   logOut() {
-    sessionStorage.removeItem('username')
+    sessionStorage.removeItem('username');
   }
 }

@@ -9,6 +9,10 @@ import { CartComponent } from './cart/cart.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { DetailComponent } from './detail/detail.component';
 import { LoginComponent } from './login/login.component';
+import { ProductComponent } from './product/product.component';
+import {HttpClientModule} from "@angular/common/http";
+import {FormsModule} from "@angular/forms";
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -18,11 +22,15 @@ import { LoginComponent } from './login/login.component';
     CartComponent,
     HomePageComponent,
     DetailComponent,
-    LoginComponent
+    LoginComponent,
+    ProductComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

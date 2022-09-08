@@ -110,13 +110,13 @@
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse" >
           <div class="navbar-nav mr-auto py-0">
             <a routerLink="/"  class="nav-item nav-link">Home</a>
             <a routerLink="/detail" class="nav-item nav-link active">Shop Detail</a>
-            <div class="nav-item dropdown">
+            <div class="nav-item dropdown" *ngIf="role === 'ADMIN'">
               <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a>
-              <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
+              <div class="dropdown-menu bg-primary rounded-0 border-0 m-0" >
                 <a routerLink="/cart" class="dropdown-item">Shopping Cart</a>
                 <a href="checkout.html" class="dropdown-item">Checkout</a>
               </div>

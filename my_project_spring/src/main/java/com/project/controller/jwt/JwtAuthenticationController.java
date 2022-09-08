@@ -50,7 +50,7 @@ public class JwtAuthenticationController {
         final String token = jwtTokenUtil.generateToken(userDetails);
 
         createAuthorizationCookie(response, token);
-
+        System.out.println(token);
         return ResponseEntity.ok(new JwtResponse(grantList, userDetails.getUsername()));
     }
 

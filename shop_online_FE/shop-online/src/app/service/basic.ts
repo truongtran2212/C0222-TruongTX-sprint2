@@ -11,7 +11,7 @@ import {HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 export class BasicAuthHttpInterceptorModule implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler) {
 
-    if (sessionStorage.getItem('username') && sessionStorage.getItem('token')) {
+    if (sessionStorage.getItem('userName') && sessionStorage.getItem('token')) {
       req = req.clone({
         setHeaders: {
           Authorization: sessionStorage.getItem('token')

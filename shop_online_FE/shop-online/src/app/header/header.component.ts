@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+  role: any;
   constructor() { }
 
-  ngOnInit(): void {
+  checkRole(): string {
+    return sessionStorage.getItem('grantList');
   }
 
+  ngOnInit(): void {
+    this.checkRole();
+    console.log(this.role);
+  }
 }

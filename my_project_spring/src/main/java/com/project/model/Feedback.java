@@ -11,7 +11,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class Feedback {
+public class Feedback implements Comparable<Feedback> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -42,5 +42,10 @@ public class Feedback {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    @Override
+    public int compareTo(Feedback o) {
+        return 0;
     }
 }

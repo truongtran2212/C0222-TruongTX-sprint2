@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {AuthenticationService} from "../service/authentication.service";
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+
 import {Router} from "@angular/router";
+import {LoginService} from "../service/login.service";
+import {AuthService} from "../service/authentication.service";
 
 @Component({
   selector: 'app-login',
@@ -8,31 +11,63 @@ import {Router} from "@angular/router";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  account: any;
+  loginForm: FormGroup;
+  rememberMeBox = false;
+  btnLoginStatus = true;
 
-  userName = '';
-  password = '';
-  invalidLogin = false;
-  grantList: any;
-  constructor(private loginService: AuthenticationService, private router: Router) { }
+  constructor(private loginService: LoginService,
+              // private toastr: ToastrService,
+              private authService: AuthService,
+              private router: Router) {
+  }
 
   ngOnInit(): void {
+    this.createLoginForm()
   }
-  checkLogin() {
-    (this.loginService.authenticate(this.userName, this.password).subscribe(
-        data => {
-          this.router.navigate(['']);
-          this.invalidLogin = false;
-          console.log("False " + this.userName)
-          console.log("False " + this.password)
-          console.log(this.grantList);
-        },
-        error => {
-          this.invalidLogin = true;
-          console.log("True " + this.userName)
-          console.log("True " + this.password)
-          console.log("True")
-        }
-      )
-    );
+
+  createLoginForm() {
+    this.loginForm = new FormGroup({
+      username: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required])
+    });
+  }
+
+  submitLogin() {
+    this.btnLoginStatus = false;
+    this.account = this.loginForm.value;
+    console.log(this.account)
+    if (this.loginForm.valid) {
+      this.loginService.goLogin(this.account).subscribe(value => {
+        this.authService.isLogin(value);
+        setTimeout(() => {
+          this.router.navigateByUrl('').then(() => {
+            window.location.reload();
+            // this.toastr.success('Đăng nhập thành công');
+            alert("Đăng nhập thành công");
+            this.btnLoginStatus = true;
+          });
+        },2000);
+      }, error => {
+        // this.toastr.error('Tên đăng nhập hoặc mật khẩu không đúng');
+        alert("Tên đăng nhập hoặc mật khẩu không đúng");
+        this.btnLoginStatus = true;
+      }, () => {
+      })
+    }
+  }
+
+  rememberMe() {
+    this.rememberMeBox = !this.rememberMeBox;
+    if (this.rememberMeBox) {
+      this.account = this.loginForm.value;
+      localStorage.setItem('usernameLogin', this.loginForm.value.username.toLowerCase());
+      localStorage.setItem('passwordLogin', this.loginForm.value.password);
+      // this.toastr.success('Đã nhớ mật khẩu');
+    } else {
+      localStorage.removeItem('usernameLogin');
+      localStorage.removeItem('passwordLogin');
+      // this.toastr.success('Hủy nhớ mật khẩu');
+    }
   }
 }

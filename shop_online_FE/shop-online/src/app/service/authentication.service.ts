@@ -1,52 +1,47 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {map} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 
-export class User {
-  id?: number;
-  userName?: string;
-  password?: string;
-  isDeleted?: number;
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
+import {environment} from "../../environments/environment";
 
-  constructor(
-    public status: string,
-  ) {
-  }
+const API_URL = `${environment.apiUrl}`;
 
-}
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService {
+export class AuthService {
 
-  constructor(
-    private httpClient: HttpClient
-  ) {
+  constructor(private http: HttpClient) { }
+
+  checkLogin(): Observable<boolean> {
+    return this.http.post<boolean>(API_URL + "/check/login", null);
   }
 
-  authenticate(username, password) {
-    // username và password phải khớp với thuộc tình của class JwtRequest bên BE
-    return this.httpClient.post<any>('http://localhost:8080/authenticate', {username, password}).pipe(
-      map(
-        userData => {
-          sessionStorage.setItem('userName', username);
-          const tokenStr = 'Bearer ' + userData.token;
-          sessionStorage.setItem('token', tokenStr);
-          sessionStorage.getItem('grantList');
-          return userData;
-        }
-      )
-    );
+  isLogin(value: any) {
+    if (this.isAdmin(value.grantList)) {
+      localStorage.setItem("role", "ADMIN");
+    } else if (this.isEmployee(value.grantList)) {
+      localStorage.setItem("role", "EMPLOYEE");
+    } else {
+      localStorage.setItem("role", "CUSTOMER");
+    }
+    localStorage.setItem("username", value.username);
   }
 
-  isUserLoggedIn() {
-    const user = sessionStorage.getItem('username');
-    console.log(!(user === null));
-    return !(user === null);
+  isAdmin(grantList: string[]): boolean {
+    return grantList.some(value => {
+      return value === 'ADMIN';
+    })
   }
 
-  logOut() {
-    sessionStorage.removeItem('username');
+  isEmployee(grantList: string[]): boolean {
+    return grantList.some(value => {
+      return value === 'EMPLOYEE';
+    })
+  }
+
+  checkAdminRole(): Observable<string> {
+    return this.http.post<string>(API_URL + "/role/admin", null);
   }
 }

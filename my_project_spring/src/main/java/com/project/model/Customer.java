@@ -36,9 +36,6 @@ public class Customer {
 
     private String email;
 
-    @OneToMany(mappedBy = "customer")
-    private List<ProductOrder> productOrderList;
-
     @OneToOne
     @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id")

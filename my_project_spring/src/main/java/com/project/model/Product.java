@@ -6,7 +6,6 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -20,23 +19,11 @@ public class Product {
 
     private String name;
 
-    private Date releaseTime;
-
-    private Date manufactureTime;
-
     private String origin;
 
     private Double price;
 
-    private String warrantyPeriod;
-
     private Integer quantity;
-
-    @Column(columnDefinition = "double default 0")
-    private Double discountPercent;
-
-    @Column(columnDefinition = "longtext")
-    private String specifications;
 
     @Column(columnDefinition = "longtext")
     private String description;
@@ -48,20 +35,8 @@ public class Product {
     private Integer isDeleted = 0;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
-
-    @OneToMany(mappedBy = "product")
-    private List<ProductCoupon> productCouponList;
-
-    @OneToMany(mappedBy = "product")
-    @JsonIgnore
-    private List<Promotion>  promotionList;
-
-    @OneToMany(mappedBy = "product")
-    @JsonIgnore
-    private List<ProductOrder> productOrderList;
 
     @Override
     public boolean equals(Object o) {

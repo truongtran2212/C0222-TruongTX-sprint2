@@ -1,0 +1,4 @@
+INSERT INTO shop_online.category (id, image, is_deleted, name) VALUES (1, 'https://www.pngmart.com/files/22/iPhone-14-PNG-Transparent.png', 0, 'Smart Phone');
+INSERT INTO shop_online.category (id, image, is_deleted, name) VALUES (2, 'https://cdn.tgdd.vn/Products/Images/7077/194536/s16/apple-watch-s3-gps-42mm-650x650.png', 0, 'Smart Watch');
+INSERT INTO shop_online.category (id, image, is_deleted, name) VALUES (3, 'https://product.hstatic.net/1000233206/product/apple-macbook-pro-m1-2020-myda2sa-a-apple-m1_0a190fe21b9844e7b982f3399bd7b150.png', 0, 'Laptop');
+INSERT INTO shop_online.category (id, image, is_deleted, name) VALUES (4, 'https://vuatao.vn/wp-content/uploads/2019/10/12-650x650-1.png', 0, 'Head Phone');

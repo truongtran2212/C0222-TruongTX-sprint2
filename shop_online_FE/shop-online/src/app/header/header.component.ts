@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {AuthService} from "../service/authentication.service";
+import {ProductService} from "../product/service/product.service";
+import {Category} from "../product/model/Category";
+import {Product} from "../product/model/Product";
 
 @Component({
   selector: 'app-header',
@@ -13,28 +16,34 @@ export class HeaderComponent implements OnInit {
   btnLoginStatus = true;
   loginStatus: any;
   username: string;
+  categoryList: Category[] = []
+  productList: Product[] = []
+  name = '';
+  idCategory = '';
   private subscriptionName: Subscription;
 
   constructor(
     // private logout: LogoutService,
-              // private toastr: ToastrService,
-              private router: Router,
-              private auth: AuthService) {
+    // private toastr: ToastrService,
+    private productService: ProductService,
+    private router: Router,
+    private auth: AuthService) {
     this.auth.checkLogin().subscribe(value => {
       this.loginStatus = value;
-      this.role = this.readLocalStorage('role');
+      this.role = this.readSessionStorage('role');
       console.log(this.role + ' role')
-      this.username = this.readLocalStorage('username');
+      this.username = this.readSessionStorage('username');
     }, error => {
-      localStorage.clear();
+      sessionStorage.clear();
     });
   }
 
   ngOnInit(): void {
+
   }
 
-  readLocalStorage(key: string): string {
-    return localStorage.getItem(key);
+  readSessionStorage(key: string): string {
+    return sessionStorage.getItem(key);
   }
 
   // onLogout(){

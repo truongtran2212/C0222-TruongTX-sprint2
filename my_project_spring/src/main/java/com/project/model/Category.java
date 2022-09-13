@@ -1,5 +1,6 @@
 package com.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -18,9 +19,6 @@ public class Category {
 
     private String name;
 
-    @Column(columnDefinition = "double default 0")
-    private Double discountPercent;
-
     @Column(columnDefinition = "text")
     private String image;
 
@@ -28,6 +26,7 @@ public class Category {
     private Integer isDeleted = 0;
 
     @OneToMany(mappedBy = "category")
+    @JsonIgnore
     private List<Product> productList;
 
     @Override

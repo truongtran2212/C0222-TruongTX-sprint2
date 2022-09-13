@@ -5,25 +5,17 @@ export interface Product {
 
   name?: string;
 
-  releaseTime?: string;
-
-  manufactureTime?: string;
-
   origin?: string;
 
   price?: number;
 
-  warrantyPeriod?: string;
-
   quantity?: number;
-  discountPercent?: number;
 
   specifications?: string;
-
-  description?: string;
 
   image?: string;
 
   isDeleted?: number;
+
   category: Category;
 }

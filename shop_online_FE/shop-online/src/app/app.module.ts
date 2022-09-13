@@ -13,6 +13,8 @@ import { ProductComponent } from './product/product.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { UserComponent } from './user/user.component';
+import { Error403Component } from './error403/error403.component';
+import { Error401Component } from './error401/error401.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { UserComponent } from './user/user.component';
     DetailComponent,
     LoginComponent,
     ProductComponent,
-    UserComponent
+    UserComponent,
+    Error403Component,
+    Error401Component
   ],
   imports: [
     BrowserModule,

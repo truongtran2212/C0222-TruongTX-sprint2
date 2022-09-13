@@ -20,24 +20,16 @@ export class AuthService {
 
   isLogin(value: any) {
     if (this.isAdmin(value.grantList)) {
-      localStorage.setItem("role", "ADMIN");
-    } else if (this.isEmployee(value.grantList)) {
-      localStorage.setItem("role", "EMPLOYEE");
+      sessionStorage.setItem("role", "ADMIN");
     } else {
-      localStorage.setItem("role", "CUSTOMER");
+      sessionStorage.setItem("role", "CUSTOMER");
     }
-    localStorage.setItem("username", value.username);
+    sessionStorage.setItem("username", value.username);
   }
 
   isAdmin(grantList: string[]): boolean {
     return grantList.some(value => {
       return value === 'ADMIN';
-    })
-  }
-
-  isEmployee(grantList: string[]): boolean {
-    return grantList.some(value => {
-      return value === 'EMPLOYEE';
     })
   }
 

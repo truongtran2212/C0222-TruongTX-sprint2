@@ -13,12 +13,11 @@ public class EncrytedPasswordUtils {
     }
 
     public static void main(String[] args) {
-        String password = "123456a@";
+        String password = "22121998";
         String encrytedPassword = new EncrytedPasswordUtils().encrytePassword(password);
 
         System.out.println("Encryted Password: " + encrytedPassword);
         System.out.println(new BCryptPasswordEncoder().matches("1234", encrytedPassword));
 
     }
-//    $2a$10$9yYDSayy85tSWFk/W/jpUeGcJVMvvFqCelxoM0dBqvAyb.EITjMlG
 }

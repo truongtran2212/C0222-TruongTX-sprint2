@@ -1,1 +1,47 @@
-<p>product works!</p>
+<div class="col-lg-4 col-6 text-left">
+  <div class="input-group">
+    <input type="search" class="form-control" placeholder="Search for products" [(ngModel)]="name" (keydown.enter)="search()">
+    <div class="input-group-append">
+                            <button class="input-group-text bg-transparent text-primary" (click)="search()">
+                                <i class="fa fa-search"></i>
+                            </button>
+    </div>
+  </div>
+</div>
+<div class="container-fluid pt-5 pb-3">
+  <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Featured Products</span>
+  </h2>
+  <button (click)="getAllSmartphone()">Smart Phone</button>
+  <button (click)="getAllSmartWatch()">Smart Watch</button>
+  <div class="row px-xl-5">
+    <div class="col-lg-3 col-md-4 col-sm-6 pb-1 d-flex" *ngFor="let product of productList">
+      <div class="product-item bg-light mb-3 overflow-hidden">
+        <div class="product-img overflow-hidden">
+          <img class="img-fluid w-100 small-img" src="{{product.image}}" alt="">
+          <div class="product-action ">
+            <a class="btn btn-outline-dark btn-square" style="margin-bottom: 170px" href=""><i
+              class="fa fa-shopping-cart"></i></a>
+            <a class="btn btn-outline-dark btn-square" style="margin-bottom: 170px" href=""><i class="far fa-heart"></i></a>
+            <a class="btn btn-outline-dark btn-square" style="margin-bottom: 170px" href=""><i
+              class="fa fa-sync-alt"></i></a>
+            <a class="btn btn-outline-dark btn-square" style="margin-bottom: 170px" href=""><i class="fa fa-search"></i></a>
+          </div>
+        </div>
+        <div class="text-center py-4">
+          <a class="h5 text-decoration-none text-truncate" href="">{{product.name}}</a>
+          <div class="d-flex align-items-center justify-content-center mt-2">
+            <h5>{{product.price | number}}<sup>đ</sup></h5>
+          </div>
+          <div class="d-flex align-items-center justify-content-center mb-1">
+            <small class="fa fa-star text-primary mr-1"></small>
+            <small class="fa fa-star text-primary mr-1"></small>
+            <small class="fa fa-star text-primary mr-1"></small>
+            <small class="fa fa-star text-primary mr-1"></small>
+            <small class="fa fa-star text-primary mr-1"></small>
+            <small>(99)</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

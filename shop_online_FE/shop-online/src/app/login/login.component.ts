@@ -40,19 +40,19 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.loginService.goLogin(this.account).subscribe(value => {
         this.authService.isLogin(value);
-        setTimeout(() => {
+        console.log("value " + value)
           this.router.navigateByUrl('').then(() => {
             window.location.reload();
             // this.toastr.success('Đăng nhập thành công');
             alert("Đăng nhập thành công");
             this.btnLoginStatus = true;
           });
-        },2000);
-      }, error => {
+
+
+      }, () => {
         // this.toastr.error('Tên đăng nhập hoặc mật khẩu không đúng');
         alert("Tên đăng nhập hoặc mật khẩu không đúng");
         this.btnLoginStatus = true;
-      }, () => {
       })
     }
   }
@@ -61,12 +61,12 @@ export class LoginComponent implements OnInit {
     this.rememberMeBox = !this.rememberMeBox;
     if (this.rememberMeBox) {
       this.account = this.loginForm.value;
-      localStorage.setItem('usernameLogin', this.loginForm.value.username.toLowerCase());
-      localStorage.setItem('passwordLogin', this.loginForm.value.password);
+      sessionStorage.setItem('usernameLogin', this.loginForm.value.username.toLowerCase());
+      sessionStorage.setItem('passwordLogin', this.loginForm.value.password);
       // this.toastr.success('Đã nhớ mật khẩu');
     } else {
-      localStorage.removeItem('usernameLogin');
-      localStorage.removeItem('passwordLogin');
+      sessionStorage.removeItem('usernameLogin');
+      sessionStorage.removeItem('passwordLogin');
       // this.toastr.success('Hủy nhớ mật khẩu');
     }
   }

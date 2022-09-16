@@ -1,6 +1,7 @@
 package com.project.model.account;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.model.Cart;
 import com.project.model.Customer;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -37,8 +38,19 @@ public class AppUser {
     @OneToOne(mappedBy = "appUser")
     private Customer customer;
 
+    @OneToOne(mappedBy = "appUser")
+    private Cart cart;
+
     public Integer getId() {
         return id;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public void setId(Integer id) {

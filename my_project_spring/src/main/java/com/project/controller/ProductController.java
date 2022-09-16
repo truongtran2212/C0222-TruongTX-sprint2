@@ -17,8 +17,9 @@ public class ProductController {
     private IProductService productService;
 
     @GetMapping("/list")
-    public ResponseEntity<List<Product>> findAll(@RequestParam(defaultValue = "") String name) {
-        List<Product> productList = productService.findAll(name);
+    public ResponseEntity<List<Product>> findAll(@RequestParam(defaultValue = "") String name,
+                                                 @RequestParam(defaultValue = "") String idCategory) {
+        List<Product> productList = productService.findAll(name, idCategory);
 
         if(productList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -46,5 +47,14 @@ public class ProductController {
         }
 
         return new ResponseEntity<>(productList, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> findByIdProduct(@PathVariable Integer id){
+        Product product = productService.findById(id);
+        if(product == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 }

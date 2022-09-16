@@ -1,3 +1,16 @@
 .small-img {
   transform: scale(.6);
 }
+.ml {
+  margin-left: 180px;
+}
+.text {
+  font-size: 1.5rem;
+}
+.btn-outline-secondary {
+  color: #cd953c !important;
+  border-color: #d0bc6b !important;
+}
+.btn-outline-secondary:focus, .btn-outline-secondary.focus {
+  box-shadow: 0 0 0 0.2rem rgba(73, 201, 176, 0.5);
+}

@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import com.project.model.Product;
 import com.project.model.account.AppUser;
 import com.project.repository.IAppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,9 +22,11 @@ public class UserRestController {
     private IAppUserRepository appUserRepository;
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping(value = "/users")
+    @GetMapping("/users")
     public ResponseEntity<List<AppUser>> getAllUser() {
         List<AppUser> appUsers = this.appUserRepository.findAll();
         return new ResponseEntity<>(appUsers, HttpStatus.OK);
     }
+
+
 }

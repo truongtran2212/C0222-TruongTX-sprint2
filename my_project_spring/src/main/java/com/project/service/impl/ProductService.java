@@ -16,8 +16,8 @@ public class ProductService implements IProductService {
     private IProductRepository productRepository;
 
     @Override
-    public List<Product> findAll(String name) {
-        return productRepository.findAll(name);
+    public List<Product> findAll(String name, String idCategory) {
+        return productRepository.findAll(name,  idCategory);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product findById(String id) {
-        return null;
+    public Product findById(Integer id) {
+        return productRepository.findById(id).orElse(null);
     }
 }

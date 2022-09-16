@@ -18,4 +18,6 @@ export interface Product {
   isDeleted?: number;
 
   category: Category;
+
+  quantityOrder?: number;
 }

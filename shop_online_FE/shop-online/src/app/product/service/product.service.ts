@@ -12,19 +12,15 @@ export class ProductService {
 
   constructor( private http: HttpClient) {}
 
-  getAllProduct(name: string): Observable<Product[]> {
-    return this.http.get<Product[]>(API_URL + "/product" + `/list?name=${name}`)
+  getAllProduct(name: string, idCategory: string): Observable<Product[]> {
+    return this.http.get<Product[]>(API_URL + "/product" + `/list?name=${name}&idCategory=${idCategory}`)
   }
 
   getAllCategory(): Observable<Category[]> {
     return this.http.get<Category[]>(API_URL + "/category/list");
   }
 
-  getAllSmartPhone(name: string): Observable<Product[]> {
-    return this.http.get<Product[]>(API_URL + "/product" + `/smartPhone?name=${name}`)
-  }
-
-  getAllSmartWatch(name: string): Observable<Product[]> {
-    return this.http.get<Product[]>(API_URL + "/product" + `/smartWatch?name=${name}`)
+  getProductById(id: number): Observable<Product> {
+    return this.http.get<Product>(API_URL + "/product/" + id)
   }
 }

@@ -13,7 +13,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class Customer {
+public class Customer{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

@@ -15,6 +15,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { UserComponent } from './user/user.component';
 import { Error403Component } from './error403/error403.component';
 import { Error401Component } from './error401/error401.component';
+import { ProductOrderComponent } from './product-order/product-order/product-order.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { Error401Component } from './error401/error401.component';
     ProductComponent,
     UserComponent,
     Error403Component,
-    Error401Component
+    Error401Component,
+    ProductOrderComponent
   ],
   imports: [
     BrowserModule,

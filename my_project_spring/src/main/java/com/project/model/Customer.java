@@ -1,56 +1,135 @@
 package com.project.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.model.account.AppUser;
-import lombok.*;
-import org.hibernate.Hibernate;
 
-import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
+import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
-@RequiredArgsConstructor
-public class Customer{
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "is_deleted")
+    private int isDelete = 0;
+
+    @Column(name = "name")
     private String name;
-
+    @Column(name = "phone_number")
     private String phoneNumber;
-
-    @Column(columnDefinition = "text")
+    @Column(name = "address")
     private String address;
-
-    @Column(columnDefinition = "text")
-    private String image;
-
-    @Column(columnDefinition = "bit(1) default 0")
-    private Boolean status;
-
-    @Column
-    private Integer isDeleted = 0;
-
+    @Column(name = "gender", columnDefinition = "BIT(1)")
+    private Integer gender;
+    @Column(name = "status")
+    private int status;
+    @Column(name = "email")
     private String email;
 
     @OneToOne
-    @JsonIgnore
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "user_name")
     private AppUser appUser;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Customer customer = (Customer) o;
-        return id != null && Objects.equals(id, customer.id);
+    @OneToMany(mappedBy = "customer")
+    @JsonIgnore
+    private List<Transaction> transactionList;
+
+    public Customer() {
     }
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
+    public Customer(Integer id, int isDelete, String name, String phoneNumber, String address, Integer gender, int status, String email, AppUser appUser, List<Transaction> transactionList) {
+        this.id = id;
+        this.isDelete = isDelete;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.gender = gender;
+        this.status = status;
+        this.email = email;
+        this.appUser = appUser;
+        this.transactionList = transactionList;
+    }
+
+    public List<Transaction> getTransactionList() {
+        return transactionList;
+    }
+
+    public void setTransactionList(List<Transaction> transactionList) {
+        this.transactionList = transactionList;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public int getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public AppUser getAppUser() {
+        return appUser;
+    }
+
+    public void setAppUser(AppUser appUser) {
+        this.appUser = appUser;
     }
 }

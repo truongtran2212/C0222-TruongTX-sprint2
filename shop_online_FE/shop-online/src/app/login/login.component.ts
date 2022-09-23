@@ -4,6 +4,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {LoginService} from "../service/login.service";
 import {AuthService} from "../service/authentication.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
   btnLoginStatus = true;
 
   constructor(private loginService: LoginService,
-              // private toastr: ToastrService,
+              private toastr: ToastrService,
               private authService: AuthService,
               private router: Router) {
   }
@@ -44,14 +45,14 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl('').then(() => {
             window.location.reload();
             // this.toastr.success('Đăng nhập thành công');
-            alert("Đăng nhập thành công");
+            this.toastr.success("Đăng nhập thành công")
             this.btnLoginStatus = true;
           });
 
 
       }, () => {
         // this.toastr.error('Tên đăng nhập hoặc mật khẩu không đúng');
-        alert("Tên đăng nhập hoặc mật khẩu không đúng");
+        this.toastr.error("Tên đăng nhập hoặc mật khẩu không đúng")
         this.btnLoginStatus = true;
       })
     }

@@ -1,5 +1,6 @@
 package com.project.model.account;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -22,11 +23,13 @@ public class UserRole {
     private Integer isDeleted = 0;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "user_name")
+    @JsonIgnore
     private AppUser appUser;
 
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id")
+    @JsonIgnore
     private AppRole appRole;
 
     public Integer getId() {

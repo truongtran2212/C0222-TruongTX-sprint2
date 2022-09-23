@@ -2,8 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {ProductService} from "./service/product.service";
 import {Product} from "./model/Product";
 import {Category} from "./model/Category";
-import {ActivatedRoute} from "@angular/router";
-import {ProductOrderService} from "../product-order/service/product-order.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
+import {ShareDataService} from "../service/share-data.service";
+import {Subscription} from "rxjs";
+import {ReloadService} from "../service/reload.service";
+import {TransactionService} from "../transaction/service/transaction.service";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-product',
@@ -18,18 +23,27 @@ export class ProductComponent implements OnInit {
   id: string;
   storage: any;
   carts = [];
+  private subscription: Subscription;
+  private messageReceived: any;
+
 
   product: Product;
   addProduct = new Map<any, any>()
 
   constructor(private productService: ProductService,
               private activatedRoute: ActivatedRoute,
-              private productOrderService: ProductOrderService) {
+              private toast: ToastrService,
+              private router: Router,
+              private shareDataService: ShareDataService,
+              private reload: ReloadService,
+              private transactionService: TransactionService) {
+    this.subscription = this.reload.getUpdate().subscribe(message => {
+      this.messageReceived = message;
+    });
   }
 
   ngOnInit(): void {
     this.getAll();
-    console.log(this.product);
   }
 
   getAll() {
@@ -43,7 +57,6 @@ export class ProductComponent implements OnInit {
     this.idCategory = "1";
     this.productService.getAllProduct(this.name, this.idCategory).subscribe(value => {
       this.productList = value;
-      console.log(value);
     })
   }
 
@@ -51,14 +64,12 @@ export class ProductComponent implements OnInit {
     this.idCategory = "2";
     this.productService.getAllProduct(this.name, this.idCategory).subscribe(value => {
       this.productList = value;
-      console.log(value);
     })
   }
 
   search() {
     this.productService.getAllProduct(this.name, this.idCategory).subscribe((value): any => {
       this.productList = value;
-      console.log(value);
     })
   }
 
@@ -66,7 +77,6 @@ export class ProductComponent implements OnInit {
     this.idCategory = "3";
     this.productService.getAllProduct(this.name, this.idCategory).subscribe(value => {
       this.productList = value;
-      console.log(value);
     })
   }
 
@@ -75,22 +85,19 @@ export class ProductComponent implements OnInit {
 
     this.productService.getProductById(product.id).subscribe(value => {
       this.product = value;
-      console.log(this.product);
       if (temp) {
         this.carts = JSON.parse(temp);
       }
-
       const item =  this.carts.find(c => c.product.id == this.product.id)
-
       console.log(item)
       if (item) {
         item.quantityOrder += 1;
       } if (!item) {
         this.carts.push({product, quantityOrder: 1})
-
       }
       window.localStorage.setItem('cart', JSON.stringify(this.carts));
-
+      this.toast.success("Thêm sản phẩm vào giỏ hàng thành công")
+      this.shareDataService.sendClickEvent();
     })
   }
 }

@@ -1,7 +1,7 @@
 package com.project.model.account;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.project.model.Cart;
 import com.project.model.Customer;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +17,8 @@ import java.util.Objects;
 @Setter
 @RequiredArgsConstructor
 public class AppUser {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @Column(unique = true, nullable = false)
+    @Column(name = "user_name")
     private String userName;
 
     @Column(nullable = false)
@@ -31,31 +27,14 @@ public class AppUser {
     @Column
     private Integer isDeleted = 0;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "appUser")
+    @JsonIgnore
     private List<UserRole> userRoles;
 
     @OneToOne(mappedBy = "appUser")
+    @JsonBackReference("customer")
     private Customer customer;
-
-    @OneToOne(mappedBy = "appUser")
-    private Cart cart;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getUserName() {
         return userName;
@@ -97,16 +76,4 @@ public class AppUser {
         this.customer = customer;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        AppUser appUser = (AppUser) o;
-        return id != null && Objects.equals(id, appUser.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

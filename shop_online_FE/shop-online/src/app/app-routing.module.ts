@@ -5,10 +5,14 @@ import {HomePageComponent} from './home-page/home-page.component';
 import {DetailComponent} from './detail/detail.component';
 import {CartComponent} from './cart/cart.component';
 import {ProductComponent} from "./product/product.component";
-import {AuthGuardAdminService} from "./service/auth-guard-admin.service";
 import {Error403Component} from "./error403/error403.component";
 import {Error401Component} from "./error401/error401.component";
-import {ProductOrderComponent} from "./product-order/product-order/product-order.component";
+import {HeaderComponent} from "./header/header.component";
+import {TransactionComponent} from "./transaction/transaction.component";
+import {OrderComponent} from "./order/order.component";
+import {AuthGuardAdminAndCustomerService} from "./service/auth-guard-adminAndCustomer.service";
+import {CustomerComponent} from "./customer/customer.component";
+import {AuthGuardCustomerService} from "./service/auth-guard-customer.service";
 
 
 const routes: Routes = [
@@ -23,11 +27,12 @@ const routes: Routes = [
     path: '', component: HomePageComponent
   },
   {
-    path: 'cart', component: CartComponent
+    path: 'cart', component: CartComponent,
+    canActivate: [AuthGuardAdminAndCustomerService]
   },
   {
     path: 'product', component: ProductComponent,
-    canActivate: [AuthGuardAdminService]
+    // canActivate: [AuthGuardAdminAndCustomerService]
   },
 
   {
@@ -43,7 +48,16 @@ const routes: Routes = [
   },
 
   {
-    path: 'productOrder', component: ProductOrderComponent
+    path: 'header', component: HeaderComponent
+  },
+
+  {
+    path: 'transaction', component: TransactionComponent,
+    canActivate: [AuthGuardCustomerService]
+  },
+
+  {
+    path: 'customer', component: CustomerComponent
   },
 ];
 

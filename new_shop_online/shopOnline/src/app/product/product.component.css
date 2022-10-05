@@ -1,0 +1,28 @@
+.small-img {
+  transform: scale(.6);
+}
+.ml {
+  margin-left: 180px;
+}
+.text {
+  font-size: 1.5rem;
+}
+.btn-outline-secondary {
+  color: #cd953c !important;
+  border-color: #d0bc6b !important;
+}
+.btn-outline-secondary:focus, .btn-outline-secondary.focus {
+  box-shadow: 0 0 0 0.2rem rgba(73, 201, 176, 0.5);
+}
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  width: 100%;
+  height: 3em;
+  border-radius: .3em;
+  padding-top: .7em;
+  color: #757575;
+  cursor: pointer;
+  background: #fff;
+}

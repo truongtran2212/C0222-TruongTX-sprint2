@@ -1,5 +1,6 @@
 package com.project.service;
 
+import com.project.dto.ProductDto;
 import com.project.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,4 +17,10 @@ public interface IProductService {
     Page<Product> findAll(Pageable pageable);
 
     Product findById(Integer id);
+
+    void deleteProduct(Integer id);
+
+    void createProduct(ProductDto productDto);
+
+    void updateProduct(ProductDto productDto);
 }

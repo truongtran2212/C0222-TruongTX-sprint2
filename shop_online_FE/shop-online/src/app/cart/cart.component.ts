@@ -24,6 +24,8 @@ export class CartComponent implements OnInit {
   userName: string;
   customer: Customer;
   transaction: Transaction;
+  page = 0;
+  totalElements: number;
 
   constructor(private productService: ProductService,
               private toast: ToastrService,
@@ -142,17 +144,19 @@ export class CartComponent implements OnInit {
   id: number;
 
   getAllTransaction() {
-    this.transactionService.getAll().subscribe(value => {
-      this.transactionList = value;
+    this.transactionService.getAll(2).subscribe((value: any) => {
+      this.transactionList = value.content;
+      this.totalElements = value.totalElements;
     })
   }
 
   createTransaction() {
-    for (let i = 0; i < this.transactionList.length; i++) {
-      this.id = this.transactionList[this.transactionList.length - 1].id;
-    }
+    // for (let i = 0; i < this.transactionList.length; i++) {
+    //   this.id = this.transactionList[this.transactionList.length - 1].id;
+    // }
+    this.id = this.totalElements + 1;
     this.transaction = {
-      id: this.id + 1,
+      id: this.id,
       payment: this.total,
       paymentMethod: 'Pay pal',
       startDate: this.getCurrenDay(),
@@ -160,10 +164,8 @@ export class CartComponent implements OnInit {
     }
     this.transactionService.createTransaction(this.transaction).subscribe(value => {
 
-      console.log("123123123 create")
     }, error => {
     }, () => {
-      this.toast.success('Thêm vào lịch sử thành công');
     })
   }
 
@@ -178,7 +180,6 @@ export class CartComponent implements OnInit {
       this.orderService.createOrder(order).subscribe(value => {
       })
     }
-    this.toast.success('Thêm vào lịch sử thành công');
   }
 
   getCurrenDay(): string {

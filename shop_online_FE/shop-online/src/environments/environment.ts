@@ -5,6 +5,16 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:8080',
+ firebaseConfig : {
+    apiKey: "AIzaSyDPVsOQthj0fVaVbWBsd9wxp9Ww1_dIJxo",
+    authDomain: "truongtxshop.firebaseapp.com",
+    databaseURL: "https://truongtxshop-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "truongtxshop",
+    storageBucket: "truongtxshop.appspot.com",
+    messagingSenderId: "642542932817",
+    appId: "1:642542932817:web:4a6d482bba9e5177843970",
+    measurementId: "G-02SDRTXE69",
+  }
 };
 
 /*

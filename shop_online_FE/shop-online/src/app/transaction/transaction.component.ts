@@ -20,6 +20,8 @@ export class TransactionComponent implements OnInit {
   total=  0 ;
 
   orderListTransaction: Order[];
+  page = 0;
+  totalElements: number;
   constructor(private transactionService: TransactionService,
               private customerService: CustomerService,
               private orderService: OrderService) { }
@@ -32,8 +34,9 @@ export class TransactionComponent implements OnInit {
   }
 
   getAllTransaction() {
-    this.transactionService.getAll().subscribe(value => {
-      this.transactionList = value;
+    this.transactionService.getAll(this.page).subscribe((value: any) => {
+      this.transactionList = value.content;
+      this.totalElements = value.totalElements;
     })
   }
 
@@ -56,5 +59,10 @@ export class TransactionComponent implements OnInit {
       document.getElementById('modal').click()
       this.total= payment;
     })
+  }
+
+  getPage(event: number) {
+    this.page = event - 1;
+    this.getAllTransaction();
   }
 }

@@ -13,9 +13,6 @@ export class DetailComponent implements OnInit {
 
   product: Product;
   carts = [];
-  total: number = 0;
-  totalProductOneProduct: number = 0;
-  checkPaypal = false;
   quantityProduct = 1;
   constructor(private productService: ProductService, private activatedRoute: ActivatedRoute, private toast: ToastrService) { }
 
@@ -57,7 +54,7 @@ export class DetailComponent implements OnInit {
         console.log(item)
       }
       window.localStorage.setItem('cart', JSON.stringify(this.carts));
-      this.toast.success("Thêm sản phẩm vào giỏ hàng thành công")
+      this.toast.success("Add product to cart successful")
     })
   }
 }

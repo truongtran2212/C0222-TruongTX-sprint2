@@ -1,0 +1,95 @@
+<form [formGroup]="formProduct" novalidate>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="p-3 bg-modal" style="background-image: url(https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?w=2000)">
+          <h4 style="text-align: center">Update product</h4>
+
+          <input class="form-control" type="text" formControlName="id" hidden>
+
+          <div class="form-group">
+            <label>Product name</label>
+            <input class="form-control" type="text" formControlName="name">
+          </div>
+
+          <div *ngIf="formProduct.controls.name.hasError('required') && formProduct.controls.name.touched"
+               class="text-danger mb-3">Input name.
+          </div>
+
+          <div *ngIf="formProduct.controls.name.hasError('maxlength') && formProduct.controls.name.touched"
+               class="text-danger mb-3">No greater than 25 characters.
+          </div>
+
+          <div class="form-group">
+            <label>Price</label>
+            <input class="form-control" type="number" formControlName="price">
+          </div>
+
+          <div *ngIf="formProduct.controls.price.hasError('required') && formProduct.controls.price.touched"
+               class="text-danger mb-3">Input price
+          </div>
+
+          <div *ngIf="formProduct.controls.price.hasError('min') && formProduct.controls.price.touched"
+               class="text-danger mb-3">No less than 1.
+          </div>
+
+          <div class="form-group">
+            <label>Origin</label>
+            <input class="form-control" type="text" formControlName="origin">
+          </div>
+
+          <div *ngIf="formProduct.controls.origin.hasError('required') && formProduct.controls.origin.touched"
+               class="text-danger mb-3">Input origin
+          </div>
+
+          <div class="form-group">
+            <label>Quantity</label>
+            <input class="form-control" type="number" formControlName="quantity">
+          </div>
+
+          <div *ngIf="formProduct.controls.quantity.hasError('required') && formProduct.controls.quantity.touched"
+               class="text-danger mb-3">Input quantity
+          </div>
+
+          <div *ngIf="formProduct.controls.quantity.hasError('min') && formProduct.controls.quantity.touched"
+               class="text-danger mb-3">No less than 1.
+          </div>
+
+          <div class="form-group">
+            <label>Description</label>
+            <input class="form-control" type="text" formControlName="description">
+          </div>
+
+          <div *ngIf="formProduct.controls.description.hasError('required') && formProduct.controls.description.touched"
+               class="text-danger mb-3">Input description
+          </div>
+
+          <div class="form-group">
+            <label>Image</label>
+            <input class="form-control" type="text" formControlName="image">
+          </div>
+
+          <div *ngIf="formProduct.controls.image.hasError('required') && formProduct.controls.image.touched"
+               class="text-danger mb-3">Input image
+          </div>
+
+          <div class="form-group">
+            <label>Category product</label>
+            <select class="form-control w-100" formControlName="category" [compareWith]="compareObjects">
+              <option value="">----- Choose -----</option>
+              <option [ngValue]="cate"
+                      *ngFor="let cate of categoryList ">{{cate.name}}</option>
+            </select>
+          </div>
+
+          <div *ngIf="formProduct.controls.category.hasError('required') && formProduct.controls.category.touched"
+               class="text-danger mb-3">Input category
+          </div>
+
+          <button class="btn btn-dark" (click)="onSubmit()" [disabled]="formProduct.invalid"
+                  data-dismiss="modal">Update
+          </button>
+          <a routerLink="/product"><button class="btn btn-dark ml-5" type="submit" data-dismiss="modal">Cancel</button></a>
+        </div>
+      </div>
+    </div>
+</form>

@@ -21,6 +21,10 @@ import { TransactionComponent } from './transaction/transaction.component';
 import { CustomerComponent } from './customer/customer.component';
 import { OrderComponent } from './order/order.component';
 import { UserRoleComponent } from './user-role/user-role.component';
+import { UpdateProductComponent } from './update-product/update-product.component';
+import {NgxPaginationModule} from "ngx-pagination";
+import {environment} from "../environments/environment";
+
 
 @NgModule({
   declarations: [
@@ -38,9 +42,11 @@ import { UserRoleComponent } from './user-role/user-role.component';
     TransactionComponent,
     CustomerComponent,
     OrderComponent,
-    UserRoleComponent
+    UserRoleComponent,
+    UpdateProductComponent
   ],
   imports: [
+
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -53,7 +59,10 @@ import { UserRoleComponent } from './user-role/user-role.component';
         progressBar: true,
         positionClass: 'toast-top-right',
       }
-    ),],
+    ),
+    NgxPaginationModule
+  ],
+
   providers: [],
   bootstrap: [AppComponent]
 })

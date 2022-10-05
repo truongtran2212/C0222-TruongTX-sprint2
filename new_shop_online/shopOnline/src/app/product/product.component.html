@@ -1,0 +1,181 @@
+
+<div class="col-lg-4 col-6 text-left ml-5">
+  <div class="input-group">
+    <input type="search" class="form-control" placeholder="Search for products" [(ngModel)]="name"
+           (keydown.enter)="search()">
+    <div class="input-group-append">
+      <button class="input-group-text bg-transparent text-primary" (click)="search()">
+        <i class="fa fa-search"></i>
+      </button>
+      <button class="btn btn-outline-success ml-5" data-toggle="modal" data-target="#form-create">Add new</button>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid pt-5 pb-3">
+
+    <div class="mb-5">
+      <button class="ml text btn btn-outline-secondary" (click)="getAllSmartphone()">Smart Phone</button>
+      <button class="ml text btn btn-outline-secondary"  (click)="getAllSmartWatch()">Smart Watch</button>
+      <button class="ml text btn btn-outline-secondary"   (click)="getAllLaptop()">Laptop</button>
+      <button class="ml text btn btn-outline-secondary"   (click)="getAll()">All Product</button>
+    </div>
+
+
+  <div class="row px-xl-5">
+    <div class="col-lg-3 col-md-4 col-sm-6 pb-1 d-flex" *ngFor="let product of productList">
+      <div class="product-item bg-light mb-3 overflow-hidden">
+        <div class="product-img overflow-hidden">
+          <img class="img-fluid w-100 small-img" src="{{product.image}}" alt="">
+          <div class="product-action ">
+            <a class="btn btn-outline-dark btn-square" style="margin-bottom: 170px" (click)="addToCart(product)"><i
+              class="fa fa-shopping-cart"></i></a>
+            <a class="btn btn-outline-dark btn-square" style="margin-bottom: 170px"
+                    (click)="getValue(product.id,product.name)" data-toggle="modal" data-target="#exampleModal">
+              <i class="fa-solid fa-trash"></i></a>
+            <a class="btn btn-outline-dark btn-square" style="margin-bottom: 170px" [routerLink]="['/product/update', product.id]"><i class="fa-solid fa-pencil"></i></a>
+            <a class="btn btn-outline-dark btn-square" style="margin-bottom: 170px" [routerLink]="[product.id]"><i
+              class="fa fa-search"></i></a>
+          </div>
+        </div>
+        <div class="text-center py-4">
+          <a class="h5 text-decoration-none text-truncate" href="">{{product.name}}</a>
+          <div class="d-flex align-items-center justify-content-center mt-2">
+            <h6>{{product.price |currency }}</h6>
+          </div>
+          <div class="d-flex align-items-center justify-content-center mb-1">
+            <small class="fa fa-star text-primary mr-1"></small>
+            <small class="fa fa-star text-primary mr-1"></small>
+            <small class="fa fa-star text-primary mr-1"></small>
+            <small class="fa fa-star text-primary mr-1"></small>
+            <small class="fa fa-star text-primary mr-1"></small>
+            <small>(99)</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Bạn có muốn xóa sản phẩm <span class="text-danger">{{nameDelete}}</span> ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="delete()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form [formGroup]="formProduct" novalidate>
+  <div class="modal " id="form-create">
+    <div class="modal-dialog">
+      <div class="modal-content" >
+        <div class="p-3 bg-modal" style="background-image: url(https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?w=2000)" >
+          <h4 style="text-align: center">Add new product</h4>
+
+          <input class="form-control" type="text" formControlName="id" hidden [value]="null">
+
+          <div class="form-group">
+            <label>Product name</label>
+            <input class="form-control" type="text" formControlName="name">
+          </div>
+
+          <div *ngIf="formProduct.controls.name.hasError('required') && formProduct.controls.name.touched"
+               class="text-danger mb-3">Input name.
+          </div>
+
+          <div *ngIf="formProduct.controls.name.hasError('maxlength') && formProduct.controls.name.touched"
+               class="text-danger mb-3">No greater than 25 characters.
+          </div>
+
+          <div class="form-group">
+            <label>Price</label>
+            <input class="form-control" type="number" formControlName="price">
+          </div>
+
+          <div *ngIf="formProduct.controls.price.hasError('required') && formProduct.controls.price.touched"
+               class="text-danger mb-3">Input price
+          </div>
+
+          <div *ngIf="formProduct.controls.price.hasError('min') && formProduct.controls.price.touched"
+               class="text-danger mb-3">No less than 1.
+          </div>
+
+          <div class="form-group">
+            <label>Origin</label>
+            <input class="form-control" type="text" formControlName="origin">
+          </div>
+
+          <div *ngIf="formProduct.controls.origin.hasError('required') && formProduct.controls.origin.touched"
+               class="text-danger mb-3">Input origin
+          </div>
+
+          <div class="form-group">
+            <label>Quantity</label>
+            <input class="form-control" type="number" formControlName="quantity">
+          </div>
+
+          <div *ngIf="formProduct.controls.quantity.hasError('required') && formProduct.controls.quantity.touched"
+               class="text-danger mb-3">Input quantity
+          </div>
+
+          <div *ngIf="formProduct.controls.quantity.hasError('min') && formProduct.controls.quantity.touched"
+               class="text-danger mb-3">No less than 1.
+          </div>
+
+          <div class="form-group">
+            <label>Description</label>
+            <input class="form-control" type="text" formControlName="description">
+          </div>
+
+          <div *ngIf="formProduct.controls.description.hasError('required') && formProduct.controls.description.touched"
+               class="text-danger mb-3">Input description
+          </div>
+
+          <div class="form-group">
+            <label>Image</label>
+            <label for="file-upload" class="custom-file-upload">
+              Custom Upload
+            </label>
+            <input id="file-upload" type="file" hidden (change)="onFileSelected($event)">
+          </div>
+
+          <img class="preview-img rounded img-fit w-100 mb-3" [src]="url" *ngIf="url" alt="">
+
+          <div *ngIf="formProduct.controls.image.hasError('required') && formProduct.controls.image.touched"
+               class="text-danger mb-3">Input image
+          </div>
+
+          <div class="form-group">
+            <label>Category product</label>
+            <select class="form-control w-100" formControlName="category">
+              <option value="">----- Choose -----</option>
+              <option [ngValue]="cate"
+                      *ngFor="let cate of categoryList ">{{cate.name}}</option>
+            </select>
+          </div>
+
+          <div *ngIf="formProduct.controls.category.hasError('required') && formProduct.controls.category.touched"
+               class="text-danger mb-3">Input category
+          </div>
+
+          <button class="btn btn-dark" (click)="create()" [disabled]="formProduct.invalid"
+                  data-dismiss="modal">Add new
+          </button>
+          <button class="btn btn-dark ml-5" type="submit" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

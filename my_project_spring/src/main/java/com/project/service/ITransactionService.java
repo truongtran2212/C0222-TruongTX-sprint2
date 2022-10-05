@@ -2,11 +2,11 @@ package com.project.service;
 
 import com.project.dto.TransactionDto;
 import com.project.model.Transaction;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ITransactionService {
     void createTransaction(TransactionDto transactionDto);
 
-    List<Transaction> findAll();
+    Page<Transaction> findAll(Pageable pageable);
 }

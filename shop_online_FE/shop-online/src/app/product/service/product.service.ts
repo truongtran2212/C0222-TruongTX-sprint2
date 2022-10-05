@@ -8,6 +8,7 @@ const API_URL = `${environment.apiUrl}`;
 @Injectable({
   providedIn: 'root'
 })
+
 export class ProductService {
 
   constructor( private http: HttpClient) {}
@@ -22,5 +23,17 @@ export class ProductService {
 
   getProductById(id: number): Observable<Product> {
     return this.http.get<Product>(API_URL + "/product/" + id)
+  }
+
+  deleteProduct(id: number): Observable<any> {
+    return this.http.delete<any>(API_URL + "/product/" + id)
+  }
+
+  createProduct(product: Product): Observable<any> {
+    return this.http.post<any>(API_URL + "/product/create", product)
+  }
+
+  updateProduct(product: Product): Observable<any> {
+    return this.http.patch<any>(API_URL + "/product/update/" + product.id, product)
   }
 }

@@ -5,6 +5,8 @@ import com.project.model.Transaction;
 import com.project.repository.TransactionRepository;
 import com.project.service.ITransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,9 +22,7 @@ public class TransactionService implements ITransactionService {
     }
 
     @Override
-    public List<Transaction> findAll() {
-        return transactionRepository.findAll();
+    public Page<Transaction> findAll(Pageable pageable) {
+        return transactionRepository.findAll(pageable);
     }
-
-
 }

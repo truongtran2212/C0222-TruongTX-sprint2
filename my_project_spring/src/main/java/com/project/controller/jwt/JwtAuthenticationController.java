@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -50,7 +50,7 @@ public class JwtAuthenticationController {
         final String token = jwtTokenUtil.generateToken(userDetails);
 
         createAuthorizationCookie(response, token);
-        System.out.println(token);
+        System.err.println(token);
         return ResponseEntity.ok(new JwtResponse(grantList, userDetails.getUsername()));
     }
 

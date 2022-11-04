@@ -9,7 +9,7 @@ public interface IAppUserService {
 
     AppUser findAppUserByUsername(String username);
 
-    void save(AppUser appUser);
+    void save(AppUser appUser) throws Exception;
 
     void registerUser(RegisterRequest registerRequest);
 

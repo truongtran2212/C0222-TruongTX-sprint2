@@ -1,5 +1,6 @@
 package com.project.authentication;
 
+import org.springframework.core.SpringVersion;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -19,5 +20,9 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
                          AuthenticationException authException) throws IOException {
 
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+    }
+
+    public static void main(String[] args) {
+        System.out.println("version " + SpringVersion.getVersion());
     }
 }

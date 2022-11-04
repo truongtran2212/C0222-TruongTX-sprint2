@@ -1,17 +1,28 @@
-import { Injectable } from '@angular/core';
-import {environment} from "../../../environments/environment";
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {Customer} from "../model/customer";
+import {Injectable} from '@angular/core';
+import {environment} from '../../../environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Customer} from '../model/customer';
+
 const API_URL = `${environment.apiUrl}`;
+
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  getCustomer(userName: string) :Observable<Customer> {
-  return this.http.get<Customer>(API_URL + "/customer?userName=" + userName);
+  getCustomer(userName: string): Observable<Customer> {
+    return this.http.get<Customer>(API_URL + '/customer?userName=' + userName);
+  }
+
+  addNewCustomer(customer: Customer): Observable<any> {
+    return this.http.post<any>(API_URL + '/customer/create' , customer);
+  }
+
+  getAllCustomer(): Observable<Customer[]> {
+    return this.http.get<Customer[]>(API_URL + '/customer/list');
   }
 }

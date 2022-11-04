@@ -1,0 +1,2 @@
+INSERT INTO shop_online.customer (id, address, email, gender, is_deleted, name, phone_number, status, user_id) VALUES (1, 'Đà Nẵng', 'truongtran@gmail.com', true, 0, 'Trần Xuân Trường', '0932596723', 0, 'TruongTX');
+INSERT INTO shop_online.customer (id, address, email, gender, is_deleted, name, phone_number, status, user_id) VALUES (2, 'Đà Nẵng', 'khoanguyen@gmail.com', true, 0, 'Nguyễn Hữu Khoa', '0772295285', 0, 'KhoaNH');

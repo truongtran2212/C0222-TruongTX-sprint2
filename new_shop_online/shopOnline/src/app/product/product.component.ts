@@ -24,13 +24,12 @@ export class ProductComponent implements OnInit {
   nameDelete = '';
   product: Product;
   categoryList: Category[];
-
+  role: string;
   url: any;
   msg = '';
   selectedFile: File = null;
 
   formProduct = new FormGroup({
-    id: new FormControl(''),
     name: new FormControl('', [Validators.required, Validators.maxLength(25)]),
     origin: new FormControl('', Validators.required),
     price: new FormControl('', [Validators.min(1), Validators.required]),
@@ -50,6 +49,7 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.role = sessionStorage.getItem('role');
     this.getAll();
     this.getAllCategory();
 
@@ -166,9 +166,11 @@ export class ProductComponent implements OnInit {
         fileRef.getDownloadURL().subscribe((url) => {
           this.formProduct.patchValue({image: url});
           this.product = this.formProduct.value;
+          console.log(this.product);
           this.productService.createProduct(this.product).subscribe(
             value => this.toast.success('create successfully'));
           this.ngOnInit();
+
         }, error => {}, () => {
           this.formProduct.reset();
         });

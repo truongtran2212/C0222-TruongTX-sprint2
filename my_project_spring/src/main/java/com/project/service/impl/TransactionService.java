@@ -1,5 +1,4 @@
 package com.project.service.impl;
-
 import com.project.dto.TransactionDto;
 import com.project.model.Transaction;
 import com.project.repository.TransactionRepository;
@@ -22,7 +21,12 @@ public class TransactionService implements ITransactionService {
     }
 
     @Override
-    public Page<Transaction> findAll(Pageable pageable) {
-        return transactionRepository.findAll(pageable);
+    public Page<Transaction> findAllByCustomerName(Pageable pageable, Integer customerId) {
+        return transactionRepository.findAllByCustomerName(pageable, customerId);
+    }
+
+    @Override
+    public List<Transaction> findAllTransaction() {
+        return transactionRepository.findAllAllTransaction();
     }
 }

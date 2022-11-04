@@ -13,45 +13,51 @@ import {Order} from '../order/model/Order';
 })
 export class TransactionComponent implements OnInit {
 
-  transactionList: Transaction[];
+  constructor(private customerService: CustomerService,
+              private transactionService: TransactionService,
+              private orderService: OrderService) {
+
+  }
+
   customer: Customer;
+  transactionList: Transaction[];
   userName: string;
   orderList: Order[];
   total = 0;
-
   orderListTransaction: Order[];
   page = 0;
   totalElements: number;
-
-  constructor(private transactionService: TransactionService,
-              private customerService: CustomerService,
-              private orderService: OrderService) {
-  }
+  itemsPerPage = 5;
+  id: number;
 
   ngOnInit(): void {
-    this.getAllTransaction();
     this.getCustomer();
     this.getOrder();
-
-  }
-
-  getAllTransaction() {
-    this.transactionService.getAll(this.page).subscribe((value: any) => {
-      this.transactionList = value.content;
-      this.totalElements = value.totalElements;
-    });
+    // this.getAllTransaction();
   }
 
   getCustomer() {
     this.userName = sessionStorage.getItem('username');
     this.customerService.getCustomer(this.userName).subscribe(value => {
       this.customer = value;
+    }, error => {
+    }, () => {
+      this.getAllTransaction();
+    });
+  }
+
+  getAllTransaction() {
+    this.id = this.customer.id;
+    this.transactionService.getAllByCustomerName(this.page, this.id).subscribe((value: any) => {
+      this.transactionList = value.content;
+      this.totalElements = value.totalElements;
     });
   }
 
   getOrder() {
     this.orderService.getOrder().subscribe(value => {
       this.orderList = value;
+      console.log(this.orderList);
     });
   }
 

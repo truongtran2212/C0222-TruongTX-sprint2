@@ -1,5 +1,6 @@
 package com.project.service.impl;
 
+import com.project.dto.UserRoleDto;
 import com.project.model.account.UserRole;
 import com.project.repository.IUserRoleRepository;
 import com.project.service.IUserRoleService;
@@ -16,4 +17,11 @@ public class UserRoleService implements IUserRoleService {
     public void save(UserRole userRole) {
         this.userRoleRepository.save(userRole);
     }
+
+    @Override
+    public void createUserRole(String userName) {
+        userRoleRepository.createUserRole(userName);
+    }
+
+
 }

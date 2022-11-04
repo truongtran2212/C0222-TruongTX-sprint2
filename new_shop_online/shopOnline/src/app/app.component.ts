@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {ShareDataService} from "./service/share-data.service";
+import {Component} from '@angular/core';
+import {ShareDataService} from './service/share-data.service';
 
 @Component({
   selector: 'app-root',
@@ -13,13 +13,14 @@ export class AppComponent {
 
   constructor(private shareDataService: ShareDataService) {
     this.shareDataService.getClickEvent().subscribe(
-      ()=> {this.ngOnInit()}
-    )
+      () => {
+        this.ngOnInit();
+      }
+    );
   }
-
   ngOnInit(): void {
     this.quantityProduct = localStorage.length;
-    if (localStorage.getItem('__paypal_storage__') !== null){
+    if (localStorage.getItem('__paypal_storage__') !== null) {
       this.quantityProduct--;
     }
   }

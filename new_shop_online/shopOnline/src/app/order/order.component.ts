@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {OrderService} from "./service/order.service";
-import {Order} from "./model/Order";
-import {CustomerService} from "../customer/service/customer.service";
-import {Customer} from "../customer/model/customer";
+import {Component, OnInit} from '@angular/core';
+import {OrderService} from './service/order.service';
+import {Order} from './model/Order';
+import {CustomerService} from '../customer/service/customer.service';
+import {Customer} from '../customer/model/customer';
 
 @Component({
   selector: 'app-order',
@@ -11,10 +11,12 @@ import {Customer} from "../customer/model/customer";
 })
 export class OrderComponent implements OnInit {
 
-  orderList: Order[] = []
+  orderList: Order[] = [];
   userName: string;
   customer: Customer;
-  constructor(private orderService: OrderService, private customerService: CustomerService) { }
+
+  constructor(private orderService: OrderService, private customerService: CustomerService) {
+  }
 
   ngOnInit(): void {
     this.getAllOrder();
@@ -24,14 +26,14 @@ export class OrderComponent implements OnInit {
   getAllOrder() {
     this.orderService.getOrder().subscribe(value => {
       this.orderList = value;
-      console.log(value)
-    })
+      console.log(value);
+    });
   }
 
   getCustomer() {
-    this.userName = sessionStorage.getItem('username')
+    this.userName = sessionStorage.getItem('username');
     this.customerService.getCustomer(this.userName).subscribe(value => {
       this.customer = value;
-    })
+    });
   }
 }

@@ -7,7 +7,7 @@
       <button class="input-group-text bg-transparent text-primary" (click)="search()">
         <i class="fa fa-search"></i>
       </button>
-      <button class="btn btn-outline-success ml-5" data-toggle="modal" data-target="#form-create">Add new</button>
+      <button  *ngIf="role == 'ADMIN'" class="btn btn-outline-success ml-5" data-toggle="modal" data-target="#form-create">Add new</button>
     </div>
   </div>
 </div>
@@ -30,12 +30,13 @@
           <div class="product-action ">
             <a class="btn btn-outline-dark btn-square" style="margin-bottom: 170px" (click)="addToCart(product)"><i
               class="fa fa-shopping-cart"></i></a>
-            <a class="btn btn-outline-dark btn-square" style="margin-bottom: 170px"
-                    (click)="getValue(product.id,product.name)" data-toggle="modal" data-target="#exampleModal">
-              <i class="fa-solid fa-trash"></i></a>
-            <a class="btn btn-outline-dark btn-square" style="margin-bottom: 170px" [routerLink]="['/product/update', product.id]"><i class="fa-solid fa-pencil"></i></a>
             <a class="btn btn-outline-dark btn-square" style="margin-bottom: 170px" [routerLink]="[product.id]"><i
               class="fa fa-search"></i></a>
+            <a *ngIf="role == 'ADMIN'" class="btn btn-outline-dark btn-square" style="margin-bottom: 170px"
+                    (click)="getValue(product.id,product.name)" data-toggle="modal" data-target="#exampleModal">
+              <i class="fa-solid fa-trash"></i></a>
+            <a *ngIf="role == 'ADMIN'" class="btn btn-outline-dark btn-square" style="margin-bottom: 170px" [routerLink]="['/product/update', product.id]"><i class="fa-solid fa-pencil"></i></a>
+
           </div>
         </div>
         <div class="text-center py-4">
@@ -83,8 +84,6 @@
       <div class="modal-content" >
         <div class="p-3 bg-modal" style="background-image: url(https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?w=2000)" >
           <h4 style="text-align: center">Add new product</h4>
-
-          <input class="form-control" type="text" formControlName="id" hidden [value]="null">
 
           <div class="form-group">
             <label>Product name</label>
@@ -179,3 +178,4 @@
     </div>
   </div>
 </form>
+

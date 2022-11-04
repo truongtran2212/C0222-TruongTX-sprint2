@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
-import {Subscription} from "rxjs";
-import {AuthService} from "../service/authentication.service";
-import {ProductService} from "../product/service/product.service";
-import {ReloadService} from "../service/reload.service";
-import {CustomerService} from "../customer/service/customer.service";
-import {Customer} from "../customer/model/customer";
-import {LogoutService} from "../service/logout.service";
-import {ToastrService} from "ngx-toastr";
-import {ShareDataService} from "../service/share-data.service";
+import {Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {AuthService} from '../service/authentication.service';
+import {ProductService} from '../product/service/product.service';
+import {ReloadService} from '../service/reload.service';
+import {CustomerService} from '../customer/service/customer.service';
+import {Customer} from '../customer/model/customer';
+import {LogoutService} from '../service/logout.service';
+import {ToastrService} from 'ngx-toastr';
+import {ShareDataService} from '../service/share-data.service';
 
 @Component({
   selector: 'app-header',
@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
   username: string;
   name = '';
   carts = [];
-  totalQuantityOrder: number = 0;
+  totalQuantityOrder = 0;
   userName: string;
   customer: Customer;
 
@@ -30,24 +30,24 @@ export class HeaderComponent implements OnInit {
   private messageReceived: any;
 
   constructor(private reload: ReloadService,
-    private logout: LogoutService,
-    private toastr: ToastrService,
-    private productService: ProductService,
-    private customerService: CustomerService,
-    private router: Router,
-    private auth: AuthService,
+              private logout: LogoutService,
+              private toastr: ToastrService,
+              private productService: ProductService,
+              private customerService: CustomerService,
+              private router: Router,
+              private auth: AuthService,
               private shareData: ShareDataService) {
-   this.shareData.getClickEvent().subscribe(value => {
-     this.totalQuantityOrder = 0;
-     this.ngOnInit();
-   });
+    this.shareData.getClickEvent().subscribe(value => {
+      this.totalQuantityOrder = 0;
+      this.ngOnInit();
+    });
   }
 
   ngOnInit(): void {
     this.auth.checkLogin().subscribe(value => {
       this.loginStatus = value;
       this.role = this.readSessionStorage('role');
-      console.log(this.role + ' role')
+      console.log(this.role + ' role');
       this.username = this.readSessionStorage('username');
     }, error => {
       sessionStorage.clear();
@@ -56,8 +56,8 @@ export class HeaderComponent implements OnInit {
       this.messageReceived = message;
     });
     this.getCustomer();
-    this.carts = JSON.parse(localStorage.getItem('cart'))
-    for (let cart of this.carts) {
+    this.carts = JSON.parse(localStorage.getItem('cart'));
+    for (const cart of this.carts) {
       this.totalQuantityOrder += cart.quantityOrder;
     }
   }
@@ -67,11 +67,10 @@ export class HeaderComponent implements OnInit {
   }
 
   getCustomer() {
-    this.userName = sessionStorage.getItem('username')
+    this.userName = sessionStorage.getItem('username');
     this.customerService.getCustomer(this.userName).subscribe(value => {
       this.customer = value;
-      console.log(this.customer.name);
-    })
+    });
   }
 
   onLogout() {
@@ -81,6 +80,7 @@ export class HeaderComponent implements OnInit {
       this.toastr.success('Logout successfull');
       this.btnLoginStatus = true;
     });
-    sessionStorage.clear();
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('role');
   }
 }

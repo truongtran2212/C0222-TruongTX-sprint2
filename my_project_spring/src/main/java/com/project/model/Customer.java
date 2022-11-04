@@ -29,7 +29,7 @@ public class Customer {
     @Column(name = "email")
     private String email;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id", referencedColumnName = "user_name")
     private AppUser appUser;
 

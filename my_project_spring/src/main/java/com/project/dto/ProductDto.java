@@ -4,13 +4,24 @@ import com.project.model.Category;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.*;
+import java.beans.Transient;
 
 public class ProductDto {
     private Integer id;
 
     @NotBlank
-    @Length(min = 3, max = 20)
+    @Length(max = 20)
     private String name;
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+    }
+    @Transient
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
 
     @NotBlank
     private String origin;
@@ -26,6 +37,7 @@ public class ProductDto {
 
     @NotBlank
     private String image;
+
     private Integer isDeleted = 0;
 
     @NotNull

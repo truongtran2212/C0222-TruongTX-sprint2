@@ -10,6 +10,7 @@ import {formatDate} from '@angular/common';
 import {CustomerService} from '../customer/service/customer.service';
 import {Customer} from '../customer/model/customer';
 import {OrderService} from '../order/service/order.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -34,7 +35,8 @@ export class CartComponent implements OnInit {
               private shareData: ShareDataService,
               private transactionService: TransactionService,
               private customerService: CustomerService,
-              private orderService: OrderService) {
+              private orderService: OrderService,
+              private route: Router) {
 
   }
 
@@ -47,21 +49,21 @@ export class CartComponent implements OnInit {
     this.customerService.getCustomer(this.userName).subscribe(value => {
       this.customer = value;
       console.log(value);
+    }, error => {
+    }, () => {
+      this.getAllTransaction();
     });
-    this.getAllTransaction();
   }
 
   addProductToCart(product: Product) {
     const temp = window.localStorage.getItem('cart');
-
     this.productService.getProductById(product.id).subscribe(value => {
       this.product = value;
       console.log(this.product);
       if (temp) {
         this.carts = JSON.parse(temp);
       }
-
-      const item = this.carts.find(c => c.product.id == this.product.id);
+      const item = this.carts.find(c => c.product.id === this.product.id);
 
       console.log(item);
       if (item) {
@@ -92,7 +94,6 @@ export class CartComponent implements OnInit {
         window.localStorage.setItem('cart', JSON.stringify(this.carts));
       }
       this.total = this.total - item.product.price;
-
     }, error => {
     }, () => {
       this.shareData.sendClickEvent();
@@ -133,36 +134,37 @@ export class CartComponent implements OnInit {
         this.createTransaction();
         this.createOrder();
         this.toast.success('Thanh toán thành công');
-        console.log('123123123 pay');
         localStorage.removeItem('cart');
         this.total = 0;
-        this.ngOnInit();
+        window.location.reload();
       }
     });
-
   }
 
   getAllTransaction() {
-    this.transactionService.getAll(2).subscribe((value: any) => {
-      this.transactionList = value.content;
-      this.totalElements = value.totalElements;
+    this.transactionService.getAllTransaction().subscribe(value => {
+      this.transactionList = value;
+      console.log(this.transactionList);
     });
   }
 
   createTransaction() {
-    // for (let i = 0; i < this.transactionList.length; i++) {
-    //   this.id = this.transactionList[this.transactionList.length - 1].id;
-    // }
-    this.id = this.totalElements + 1;
+    if (this.transactionList.length === 0) {
+      this.id = 1;
+    }
+    if (this.transactionList.length > 0) {
+      this.id = this.transactionList[this.transactionList.length - 1].id;
+    }
     this.transaction = {
-      id: this.id,
+      id: this.id + 1,
       payment: this.total,
       paymentMethod: 'Pay pal',
       startDate: this.getCurrenDay(),
       customer: this.customer,
     };
+    console.log(this.transaction);
     this.transactionService.createTransaction(this.transaction).subscribe(value => {
-
+      console.log(value);
     }, error => {
     }, () => {
     });
@@ -176,12 +178,16 @@ export class CartComponent implements OnInit {
         transactionOrder: this.transaction,
         product: cart.product
       };
+      console.log(this.carts);
       this.orderService.createOrder(order).subscribe(value => {
+        console.log(value);
       });
     }
+    console.log(this.transaction);
   }
 
   getCurrenDay(): string {
+    const header = new Headers()
     return formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss', 'en-US');
   }
 }

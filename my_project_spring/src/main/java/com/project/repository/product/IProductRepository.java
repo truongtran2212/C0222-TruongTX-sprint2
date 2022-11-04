@@ -1,14 +1,19 @@
 package com.project.repository.product;
 
 import com.project.model.Product;
+import jdk.nashorn.internal.objects.annotations.Function;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Transactional
+@Repository
 public interface IProductRepository extends JpaRepository<Product, Integer> {
 
     @Query(value = "select * from product where is_deleted = 0 and name like %:name% and category_id like %:idCategory% order by id desc", nativeQuery = true)

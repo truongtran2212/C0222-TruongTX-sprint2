@@ -2,6 +2,7 @@ package com.project.controller;
 import com.project.dto.ProductDto;
 import com.project.model.Product;
 import com.project.service.IProductService;
+import org.apache.tomcat.util.http.parser.Cookie;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +37,6 @@ public class ProductController {
         if(productList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-
         return new ResponseEntity<>(productList, HttpStatus.OK);
     }
 
@@ -53,6 +53,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> findByIdProduct(@PathVariable Integer id){
+
         Product product = productService.findById(id);
         if(product == null){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -63,7 +64,7 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Integer id) {
         if(id == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
        productService.deleteProduct(id);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -76,7 +77,7 @@ public class ProductController {
         }
 
         if(productDto == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         productService.createProduct(productDto);
         return new ResponseEntity<>(HttpStatus.CREATED);

@@ -27,10 +27,14 @@
       </div>
     </div>
   </div>
-  <div *ngFor="let transaction of transactionList | paginate: { itemsPerPage: 5, currentPage: page + 1, totalItems: totalElements }, let i = index"  class="row w-100 mt-2">
-    <div (click)="showDetail(transaction.id, transaction.payment)" *ngIf="userName == transaction.customer.appUser.userName"  class="col-10 h-20 rounded-5 row-hover my-1 bg-ccc d-flex justify-content-between align-items-center mx-auto">
+  <div
+    *ngFor="let transaction of transactionList | paginate: { itemsPerPage: itemsPerPage, currentPage: page + 1, totalItems: totalElements }, let i = index"
+    class="row w-100 mt-2">
+    <div (click)="showDetail(transaction.id, transaction.payment)"
+         *ngIf="userName == transaction.customer.appUser.userName"
+         class="col-10 h-20 rounded-5 row-hover my-1 bg-ccc d-flex justify-content-between align-items-center mx-auto">
       <div class="col-2 h6 m-0">
-        <p class="text-center m-0">{{5 * page + i + 1}}</p>
+        <p class="text-center m-0">{{itemsPerPage * page + i + 1}}</p>
       </div>
       <div class="col-2 h6">
         <p class="text-center m-0">{{(transaction.startDate | slice:0:10)}}</p>
@@ -59,7 +63,7 @@
     <div class="col-md-10 d-flex">
       <div class="col-md-3"></div>
       <div class="col-md-6">
-        <div style="margin-right: 30px">
+        <div style="margin-right: 30px" *ngIf="totalElements > itemsPerPage">
           <pagination-controls previousLabel="Trước"
                                nextLabel="Sau" (pageChange)="getPage($event)"
                                style="float: right">
@@ -99,7 +103,8 @@
             </div>
           </div>
           <div class="row w-100 m-0">
-            <div *ngFor="let order of orderListTransaction" class="col-12 d-flex justify-content-between rounded-5 my-2 h-20 mx-auto bg-white">
+            <div *ngFor="let order of orderListTransaction"
+                 class="col-12 d-flex justify-content-between rounded-5 my-2 h-20 mx-auto bg-white">
               <div class="col-2">
                 <img class="h-100" src="{{order.product.image}}">
               </div>

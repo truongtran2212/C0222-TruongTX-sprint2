@@ -25,7 +25,15 @@ import {UpdateProductComponent} from './update-product/update-product.component'
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
 import {NgxPaginationModule} from 'ngx-pagination';
-
+import {
+  AmazonLoginProvider,
+  FacebookLoginProvider,
+  GoogleLoginProvider, SocialAuthService,
+  SocialAuthServiceConfig,
+  SocialLoginModule
+} from 'angularx-social-login';
+import { StatisticsComponent } from './statistics/statistics.component';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -44,16 +52,18 @@ import {NgxPaginationModule} from 'ngx-pagination';
     CustomerComponent,
     OrderComponent,
     UserRoleComponent,
-    UpdateProductComponent
+    UpdateProductComponent,
+    StatisticsComponent,
+    ChatComponent
   ],
   imports: [
-
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    SocialLoginModule,
     ToastrModule.forRoot({
         timeOut: 2000,
         closeButton: true,
@@ -65,7 +75,24 @@ import {NgxPaginationModule} from 'ngx-pagination';
     NgxPaginationModule
   ],
 
-  providers: [],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('497352375737568'),
+          },
+        ],
+        onError: (err) => {
+          console.error(err);
+        },
+      } as SocialAuthServiceConfig,
+    },
+    SocialAuthService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -22,7 +22,13 @@ public class TransactionController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<?> showListTransaction (@RequestParam(defaultValue = "0") Integer page) {
-        return new ResponseEntity<>(this.transactionService.findAll(PageRequest.of(page,5)), HttpStatus.OK);
+    public ResponseEntity<?> showListTransaction (@RequestParam(defaultValue = "0") Integer page,
+                                                    @RequestParam(defaultValue = "") Integer customerId) {
+        return new ResponseEntity<>(this.transactionService.findAllByCustomerName(PageRequest.of(page,5),customerId), HttpStatus.OK);
+    }
+
+    @GetMapping("/listTransaction")
+    public ResponseEntity<?> showList () {
+        return new ResponseEntity<>(this.transactionService.findAllTransaction(), HttpStatus.OK);
     }
 }

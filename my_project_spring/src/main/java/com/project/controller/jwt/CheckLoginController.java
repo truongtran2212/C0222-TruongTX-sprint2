@@ -20,12 +20,6 @@ public class CheckLoginController {
     @Autowired
     private CookieService cookieService;
 
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-
-    @Autowired
-    private JwtUserDetailsService jwtUserDetailsService;
-
     @RequestMapping(value = "/check/login", method = RequestMethod.POST)
     public ResponseEntity<Boolean> TestRequest(HttpServletRequest request) {
         final String requestTokenHeader = this.cookieService.cookie(request).get("Authorization");

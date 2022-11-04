@@ -1,5 +1,6 @@
 package com.project.util;
 
+import com.project.service.IProductService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +18,7 @@ public class EncrytedPasswordUtils {
         String encrytedPassword = new EncrytedPasswordUtils().encrytePassword(password);
 
         System.out.println("Encryted Password: " + encrytedPassword);
-        System.out.println(new BCryptPasswordEncoder().matches("1234", encrytedPassword));
+        System.out.println(new BCryptPasswordEncoder().matches("22121998", encrytedPassword));
 
     }
 }
